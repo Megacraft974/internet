@@ -1,0 +1,10 @@
+1614614171587	geckodriver	INFO	Listening on 127.0.0.1:28428
+1614614174553	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileEo5M6t"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1614614177804	Marionette	INFO	Listening on port 28437
+1614614178159	Marionette	WARN	TLS certificate errors will be ignored for this session
+1614614184238	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1614614187295	Marionette	INFO	Stopped listening on port 28437
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
