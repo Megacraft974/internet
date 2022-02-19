@@ -8,3 +8,81 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1645267434157	geckodriver	INFO	Listening on 127.0.0.1:57106
+1645267437232	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "57107" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilel3mFOl"
+1645267437484	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilel3mFOl\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:57107/devtools/browser/86ed709f-8951-42e3-af4c-2706f0555a9b
+1645267438707	Marionette	INFO	Listening on port 57136
+1645267438794	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645267442801	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1645267442879	Marionette	INFO	Stopped listening on port 57136
+1645268024728	geckodriver	INFO	Listening on 127.0.0.1:62161
+1645268027813	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "62162" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileCkDjYz"
+1645268028002	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileCkDjYz\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:62162/devtools/browser/ff46820a-4f46-44e4-b2f2-510467faecfd
+1645268029125	Marionette	INFO	Listening on port 62184
+1645268029370	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268033305	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1645268033600	Marionette	INFO	Stopped listening on port 62184
+1645268254920	geckodriver	INFO	Listening on 127.0.0.1:63934
+1645268258012	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "63935" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilebbjVgs"
+1645268258202	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilebbjVgs\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:63935/devtools/browser/b01056e3-1316-46e0-8139-8aba303cad65
+1645268259381	Marionette	INFO	Listening on port 63953
+1645268259566	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268508749	Marionette	INFO	Stopped listening on port 63953
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+running in headless mode.
+1645268365446	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileOAbu1T\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:64803/devtools/browser/78f00c6d-3ddb-4534-914b-0552d679e3f0
+1645268366200	Marionette	INFO	Listening on port 64834
+1645268366297	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268369496	geckodriver	INFO	Listening on 127.0.0.1:64900
+1645268372577	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "64901" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileaf8jlI"
+*** You are running in headless mode.
+1645268372772	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileaf8jlI\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:64901/devtools/browser/fed5b96e-451d-498c-adc5-d1ab24f95d35
+1645268373610	Marionette	INFO	Listening on port 64941
+1645268374118	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268384839	geckodriver	INFO	Listening on 127.0.0.1:65093
+1645268387922	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "65094" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileLa41tW"
+*** You are running in headless mode.
+1645268388113	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofileLa41tW\\search.json.mozlz4", (void 0)))
+1645268388616	geckodriver	INFO	Listening on 127.0.0.1:65152
+1645268391687	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "65153" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilegH4sh4"
+*** You are running in headless mode.
+1645268391873	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofilegH4sh4\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:65153/devtools/browser/10223726-af23-4a61-ad0a-b73f8d1b0e95
+1645268392641	Marionette	INFO	Listening on port 65185
+1645268392723	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268396673	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1645268397147	Marionette	INFO	Stopped listening on port 65185
+1645268448801	geckodriver	INFO	Listening on 127.0.0.1:49363
+1645268451894	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "49364" "-no-remote" "-profile" "C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofiler6cMsQ"
+*** You are running in headless mode.
+1645268452085	Marionette	INFO	Marionette enabled
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\willi\\AppData\\Local\\Temp\\rust_mozprofiler6cMsQ\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:49364/devtools/browser/8a8fd357-32ec-4804-8cfa-a0ad9e483666
+1645268452872	Marionette	INFO	Listening on port 49399
+1645268452932	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1645268457001	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+1645268457642	Marionette	INFO	Stopped listening on port 49399
+[Parent 24984, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+

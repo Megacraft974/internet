@@ -1,9 +1,1 @@
-[global]
-server.socket_host = "127.0.0.1"
-server.socket_port = 8080
-server.thread_pool = 5
-tools.sessions.on = True
-tools.encode.encoding = "Utf-8"
-[/annexes]
-tools.staticdir.on = True
-tools.staticdir.dir = "annexes"
+import cherrypyclass MonSiteWeb(object):    @cherrypy.expose    def index(self):        # Renvoi d'une page HTML contenant un lien vers une autre page        # (laquelle sera produite par une autre méthode du même objet) :         return '''            <h2>Veuillez <a href="unMessage">cliquer ici</a>            pour accéder à une information d'importance cruciale.</h2> '''    @cherrypy.expose    def unMessage(self):        return "<h1>La programmation, c'est génial !</h1>"cherrypy.quickstart(MonSiteWeb(), config ="tutoriel.conf")

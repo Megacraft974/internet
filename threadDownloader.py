@@ -1,10 +1,9 @@
-#url = "https://big.romspure.com/NSW/Hyrule%20Warriors%20Age%20of%20Calamity%20%5B01002B00111A2000%5D%5Bv0%5D.nsp?__cf_chl_jschl_tk__=e55fb2e7ee47f902fe1d7e386fad472b2f088de4-1608966695-0-AeYu_VPccZAV8iU2bCqAYW8tPNsOHPVnFpHo9Qy6Rf3WGq-o56WiXUmeapMeJ0KJyUogW60oEV06U_CcBgxU5Md8ySUYfiuc6mvJDbqElMeAdCGb1Piu_TMffXq2dhouC-Ftqfz04Tkr3EC0TaTi-CNPT8Pm7D1WY09Xb0x73a356fdvzUGg1LlxwHKIT2IwytHVmM-Win0kDbVVUAMAT0lHn-XrzpsrNOp0ULUxLFxBujJRQ0zBng37cxsdSKbCtffJB9rGL_ikdKuK6CN__BESObcBGabx0Fku3ero0ZMYbRnoYjov5QGbg5yzVcsIojf0BBmYVy64hzN4KNPUE_tfJiIS-P6LHjRVQMWlrhRtMIVVBe46__gs30PMt2BkM4yy8Xe_MCn8eSuPOtm2J2XtBXngrSSZ1cfZXmv6SPdd"
-url = "https://big.romspure.com/NSW/Hyrule%20Warriors%20Age%20of%20Calamity%20%5B01002B00111A2000%5D%5Bv0%5D.nsp?__cf_chl_jschl_tk__=e55fb2e7ee47f902fe1d7e386fad472b2f088de4-1608966695-0-AeYu_VPccZAV8iU2bCqAYW8tPNsOHPVnFpHo9Qy6Rf3WGq-o56WiXUmeapMeJ0KJyUogW60oEV06U_CcBgxU5Md8ySUYfiuc6mvJDbqElMeAdCGb1Piu_TMffXq2dhouC-Ftqfz04Tkr3EC0TaTi-CNPT8Pm7D1WY09Xb0x73a356fdvzUGg1LlxwHKIT2IwytHVmM-Win0kDbVVUAMAT0lHn-XrzpsrNOp0ULUxLFxBujJRQ0zBng37cxsdSKbCtffJB9rGL_ikdKuK6CN__BESObcBGabx0Fku3ero0ZMYbRnoYjov5QGbg5yzVcsIojf0BBmYVy64hzN4KNPUE_tfJiIS-P6LHjRVQMWlrhRtMIVVBe46__gs30PMt2BkM4yy8Xe_MCn8eSuPOtm2J2XtBXngrSSZ1cfZXmv6SPdd"
+url = "https://www.mysqltutorial.org/wp-content/uploads/2018/03/mysqlsampledatabase.zip"
 
 import threading
 import requests
 from time import sleep
-from os import listdir
+import os
 
 requests.packages.urllib3.disable_warnings()
 
@@ -21,8 +20,12 @@ default_threads = threading.enumerate()
 def get_chunk(fileurl, start, stop):
     resume_header = {'Range': 'bytes={}-{}'.format(start,stop)}
     #resume_header = {}
-    r = requests.get(fileurl, headers=resume_header, stream=True,  verify=False, allow_redirects=True)
-    file = "C:/Users/willi/Documents/tmpDownload/chunk-{}-{}".format(start,stop)
+    r = requests.get(fileurl, headers=resume_header, stream=True, verify=False, allow_redirects=True)
+    root = "C:/Users/willi/Documents/"
+    folder = os.path.join(root, "tmpDownload")
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+    file = os.path.join(folder, "chunk-{}-{}".format(start,stop))
     if not r.status_code in (200,206):
         print("{} stopped, status: {}\n".format(start,r.status_code),end="")
         global running
@@ -57,7 +60,7 @@ for t in threading.enumerate():
 path = "C:/Users/willi/Documents/tmpDownload/"
 print("Done, merging...")
 with open(file,'wb') as f:
-    for file in listdir(path):
+    for file in sorted(os.listdir(path)):
         #print(file)
         with open(path+file,'rb') as tf:
             f.write(tf.read())

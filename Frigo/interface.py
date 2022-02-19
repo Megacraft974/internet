@@ -429,8 +429,11 @@ class interfacePygame:
 
     def getTomorrowBin(self):
         r = requests.get(self.urlBinTomorrow)
+        r.raise_for_status()
         if r.status_code == 200:
             return json.loads(r.text)
+        else:
+            raise 
 
     def getMonthBin(self):
         r = requests.get(self.urlBinMonth.format(self.date.strftime("%m"),self.date.strftime("%Y")))
