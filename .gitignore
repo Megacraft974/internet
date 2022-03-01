@@ -1,4 +1,8 @@
 Frigo/
+mangas/**
+website_hashes/**
+pictures/**
+
 
 *.zip
 *.mp4

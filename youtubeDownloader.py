@@ -30,15 +30,21 @@ class Downloader:
         data = self.get_urls(url)
         if len(data) == 0:
             return
+
+        # print('\n'.join('-'.join(map(str, e)) for e in data[0].items()))
         url = data[0]['url']
+        size = int(data[0]['contentLength'])
         if file is None:
             file = 'video.mp4'
 
+        current_size = 0
         r = requests.get(url, stream=True)
         with open(file, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024):
-                if chunk: 
+                if chunk:
+                    current_size += len(chunk)
                     f.write(chunk)
+                    print(str(current_size) + " / " + str(size) + " - " + str(int(current_size/size*100)) + "%")
 
 url = "https://www.youtube.com/watch?v=8CYy9jNmpXM"
 d = Downloader()
