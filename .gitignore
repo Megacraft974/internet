@@ -3,6 +3,11 @@ mangas/**
 website_hashes/**
 pictures/**
 
+**/secret.*
+credentials.json
+**/onions.txt
+**/onions.db
+**/imgs/*
 
 *.zip
 *.mp4
