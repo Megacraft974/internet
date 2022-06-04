@@ -13,3 +13,5 @@ credentials.json
 *.mp4
 *.txt
 *.log
+cookies.pkl
+insta_data/*
