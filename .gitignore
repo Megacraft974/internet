@@ -2,6 +2,7 @@ Frigo/
 mangas/**
 website_hashes/**
 pictures/**
+insta_data/**
 
 **/secret.*
 credentials.json
@@ -14,4 +15,3 @@ credentials.json
 *.txt
 *.log
 cookies.pkl
-insta_data/*
