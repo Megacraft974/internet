@@ -9,10 +9,12 @@ token.json
 **/onions.db
 **/imgs/*
 
+*.log
 *.zip
 *.mp4
 *.txt
 *.log
+*.code-workspace
 cookies.pkl
 
 

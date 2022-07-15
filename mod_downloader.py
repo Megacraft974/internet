@@ -1,22 +1,13 @@
+"""
+Very simple tool, get links from a file and successively open them in a web browser
+"""
 import requests
 import threading
 import os
 import re
 import webbrowser
 
-if False: # Request debug
-    from http.client import HTTPConnection
-    import logging
-
-    HTTPConnection.debuglevel = 1
-
-    logging.basicConfig()
-    logging.getLogger().setLevel(logging.DEBUG)
-    requests_log = logging.getLogger("requests.packages.urllib3")
-    requests_log.setLevel(logging.DEBUG)
-    requests_log.propagate = True
-
-filepath = 'C:/Users/willi/AppData/Roaming/.minecraft/mods/Hidden/modpack/modpack.txt'
+filepath = os.path.expanduser('~/AppData/Roaming/.minecraft/mods/Hidden/modpack/modpack.txt')
 root = os.path.dirname(os.path.abspath(filepath))
 max_threads = 1
 headers = {
@@ -66,12 +57,6 @@ with open(filepath, 'r') as f:
         if url.startswith('https://www.curseforge.com/'):
             url += '/file'
         webbrowser.open(url)
-        # while len(threads) >= max_threads:
-        #     threads = list(filter(lambda t: t.is_alive(), threads))
-        #     threads.pop(0).join()
-
-        # print(project)
-        # threads.append(ddl_thread(url))
         input('Next')
 
 print('Done')
