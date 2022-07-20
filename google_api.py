@@ -7,6 +7,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from google.auth.exceptions import RefreshError
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
@@ -30,32 +31,44 @@ MAX_FILESIZE = 5000000  # Don't send files bigger than 5MB
 
 class GoogleAPI:
     def __init__(self, files_root=None):
-        self.creds = self.api_login()
-        self.service = build('drive', 'v3', credentials=self.creds)
-
         self.mapped_folders = {}
         self.files = {}
         self.deleted = {}
         self.force_update = set()
 
-        self.files_root = os.path.abspath(files_root or '.')
+        self.settings_root = os.path.dirname(os.path.realpath(__file__))
+        self.files_root = os.path.abspath(
+            files_root or self.settings_root)
         self.drive_root = os.path.split(self.files_root)[-1]
+
+        self.creds = self.api_login()
+        self.service = build('drive', 'v3', credentials=self.creds)
 
         self.get_root_id()
 
     def api_login(self):
         creds = None
-        if os.path.exists('token.json'):
+        if os.path.exists(os.path.join(self.settings_root, 'token.json')):
             creds = Credentials.from_authorized_user_file(
-                'token.json', SCOPES)
+                os.path.join(self.settings_root, 'token.json'), SCOPES)
         if not creds or not creds.valid:
+            renew = True
             if creds and creds.expired and creds.refresh_token:
-                creds.refresh(Request())
-            else:
+                try:
+                    creds.refresh(Request())
+                except RefreshError:
+                    # Credentials could not be renewed
+                    renew = True # Could also be 'pass'
+                else:
+                    # Credentials were renewed
+                    renew = False
+
+            if renew:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'credentials.json', SCOPES)
+                    os.path.join(self.settings_root, 'credentials.json'), SCOPES)
                 creds = flow.run_local_server(port=0)
-            with open('token.json', 'w') as token:
+
+            with open(os.path.join(self.settings_root, 'token.json'), 'w') as token:
                 token.write(creds.to_json())
         return creds
 
@@ -196,11 +209,11 @@ class GoogleAPI:
             while parent in folders:
                 p_name, parent = folders[parent]
                 path.append(p_name)
-            
+
             path = '/'.join(reversed(path))
-            
+
             self.mapped_folders[f_id] = path
-        
+
         # Files
 
         page_token = None
@@ -224,7 +237,8 @@ class GoogleAPI:
 
                 for file in response.get('files', []):
                     parents = file.get('parents')
-                    path = self.mapped_folders.get(parents[0], None) if parents else None
+                    path = self.mapped_folders.get(
+                        parents[0], None) if parents else None
                     if path:
                         path += '/'
                     else:
@@ -241,23 +255,23 @@ class GoogleAPI:
                 break
         # TODO - List files too
 
-    def find_folder(self, path):
-        path = os.path.normpath(os.path.join(self.files_root, path))
-        path = os.path.relpath(path, self.files_root)
-        path = self.drive_root + '/' + path
-        path = path.replace('\\', '/')
+    def find_folder(self, org_path):
+        b = os.path.normpath(os.path.join(self.files_root, org_path))
+        c = os.path.relpath(b, self.files_root).replace('\\', '/')
+        path = self.drive_root + '/' + c
 
-        if path == self.drive_root:
-            return self.root_id
+        # if path == self.drive_root:
+        #     return self.root_id
 
         self.list_folder()
 
         for id, f_path in self.mapped_folders.items():
             if f_path == path:
                 return id
-                
+
         # Create the folder
-        root, filename = os.path.split(path)
+        root, filename = os.path.split(c) # Use c instead of path to get path relative to self.files_root
+
         root = self.find_folder(root)
 
         folder = self.create_folder(filename, [root])
@@ -293,21 +307,26 @@ class GoogleAPI:
     # Send files
 
     def add_media(self, path):
-        rootname, name = os.path.split(path)
-        root = self.find_folder(rootname)
-        file_type = mimetypes.guess_type(path)[0] or '*/*'
+        print(path)
+        try:
+            rootname, name = os.path.split(path)
+            root = self.find_folder(rootname)
+            file_type = mimetypes.guess_type(path)[0] or '*/*'
 
-        file_metadata = {
-            'name': name,
-            'mimeType': file_type,
-            'parents': [root]
-        }
-        media = MediaFileUpload(
-            os.path.join(self.files_root, path),
-            mimetype=file_type,
-            resumable=True)
-        file = self.service.files().create(
-            body=file_metadata, media_body=media, fields='id').execute()
+            file_metadata = {
+                'name': name,
+                'mimeType': file_type,
+                'parents': [root]
+            }
+            media = MediaFileUpload(
+                os.path.join(self.files_root, path),
+                mimetype=file_type,
+                resumable=True)
+            file = self.service.files().create(
+                body=file_metadata, media_body=media, fields='id').execute()
+        except Exception as e:
+            print(f' {path}-{e} ')
+            return
 
         print(f'Sent {path}, id {file.get("id")}')
         return file
@@ -363,6 +382,7 @@ class GoogleAPI:
         else:
             with ThreadPool(processes=processes) as p:
                 p.imap(self.add_media, que, 10)
+            p.join()
 
     # Delete files
 
@@ -504,7 +524,8 @@ class GoogleAPI:
     def get_changes(self, pageToken=None):
         if pageToken is None:
             pageToken = self.service.changes().getStartPageToken().execute().get("startPageToken")
-            pageToken = str(max(int(pageToken)-1000, 0)) # Get at most 1000 changes
+            # Get at most 1000 changes
+            pageToken = str(max(int(pageToken)-100, 0))
 
         changes = []
         while True:
@@ -513,7 +534,9 @@ class GoogleAPI:
 
             req = self.service.changes().list(
                 spaces='drive',
-                fields='changes(time, file(id, parents, name))',
+                fields='nextPageToken, '
+                'newStartPageToken, '
+                'changes(time, file(id, parents, name))',
                 includeRemoved=False,
                 restrictToMyDrive=True,
                 pageToken=pageToken,
@@ -523,13 +546,16 @@ class GoogleAPI:
             changes = req.get("changes")
             for change in changes:
                 yield change
-            
+
             pageToken = req.get("nextPageToken")
+            tmp = req.get("newStartPageToken")
+            if tmp:
+                new_token = tmp
+
             if not pageToken:
                 yield 'STOP'
-                yield req.get("newStartPageToken")
+                yield new_token
                 return
-
 
     def get_comments(self, pageToken):
         def callback(request_id, response, exception):
@@ -598,7 +624,7 @@ class GoogleAPI:
                 continue
 
             path = None
-            
+
             if file.get('id') in self.mapped_folders:
                 path = f'{count}/{self.mapped_folders[file.get("id")]}'
             else:
@@ -629,8 +655,9 @@ class GoogleAPI:
         if count > 0:
             batch.execute()
             print(f'Parsed {count} changes')
-        
-        return next(changes)
+
+        new_token = next(changes)
+        return new_token
 
 
 if __name__ == '__main__':
@@ -647,7 +674,7 @@ if __name__ == '__main__':
     api = GoogleAPI(files_root=os.path.abspath('insta_data'))
     # api.get_comments()
     # api.list_folder_v2()
-    api.add_new_medias()
+    api.add_new_medias(processes=3)
     pass
 
     # api.add_new_medias(1)
